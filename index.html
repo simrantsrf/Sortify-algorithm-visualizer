@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sortify | Algorithm Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
+        .bar {
+            transition: height 0.3s ease, background-color 0.3s ease;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <nav class="sticky top-0 w-full p-6 lg:px-20 flex justify-between items-center z-50 bg-[#0f172a]/80 backdrop-blur-md">
+        <div class="text-3xl font-bold tracking-tighter text-white">
+            Sort<span class="text-blue-500">ify</span>
+        </div>
+        <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-400">
+            <div class="relative group">
+    <button class="hover:text-white transition">Algorithms</button>
+
+    <div class="absolute hidden group-hover:block mt-2 bg-slate-900 border border-slate-700 rounded-xl shadow-lg p-4 text-sm w-48">
+
+        <a href="#bubble" class="block py-1 hover:text-blue-400">Bubble Sort</a>
+        <a href="#selection" class="block py-1 hover:text-blue-400">Selection Sort</a>
+        <a href="#insertion" class="block py-1 hover:text-blue-400">Insertion Sort</a>
+        <a href="#merge" class="block py-1 hover:text-blue-400">Merge Sort</a>
+        <a href="#quick" class="block py-1 hover:text-blue-400">Quick Sort</a>
+        <a href="#heap" class="block py-1 hover:text-blue-400">Heap Sort</a>
+        <a href="#binary" class="block py-1 hover:text-blue-400">Binary Search</a>
+        <a href="#dfs" class="block py-1 hover:text-blue-400">DFS</a>
+        <a href="#bfs" class="block py-1 hover:text-blue-400">BFS</a>
+        <a href="#dijkstra" class="block py-1 hover:text-blue-400">Dijkstra</a>
+
+    </div>
+</div>
+
+            <a href="#guide" class="hover:text-white transition">Guide</a>
+
+            <a href="#complexity" class="hover:text-white transition">Complexity</a>
+
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 lg:px-20 py-12 lg:py-24">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            
+            <div class="space-y-10">
+                <div class="space-y-6">
+                    <h1 class="text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
+                        Visualize Algorithms. <br/>
+                        <span class="text-blue-500">Understand Them Instantly.</span>
+                    </h1>
+                    
+                    <p class="text-slate-400 text-lg lg:text-xl max-w-lg leading-relaxed">
+                        Sortify helps students and developers learn sorting algorithms like Bubble Sort and Selection Sort through real-time visual animations and interactive controls.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="toggleMenu()" class="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-500/20 active:scale-95">
+                        Start Visualizing
+                    </button>
+   
+                    <button onclick="showAlgorithms()" class="px-8 py-4 glass-card hover:bg-white/10 text-white font-bold rounded-xl transition-all">
+                        Explore Algorithms
+                    </button>
+
+                    <div id="algoMenu" class="hidden mt-6 grid grid-cols-2 gap-3 max-w-md">
+
+                        <button onclick="runAlgorithm('bubble')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded">Bubble Sort</button>
+
+                        <button onclick="runAlgorithm('selection')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded">Selection Sort</button>
+
+                        <button onclick="runAlgorithm('insertion')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded">Insertion Sort</button>
+
+                        <button onclick="runAlgorithm('merge')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded">Merge Sort</button>
+
+                        <button onclick="runAlgorithm('quick')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded">Quick Sort</button>
+
+                        <button onclick="runAlgorithm('heap')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded">Heap Sort</button>
+
+                        <button onclick="runAlgorithm('binary')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded">Binary Search</button>
+
+                        <button onclick="runAlgorithm('dfs')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded">DFS</button>
+
+                        <button onclick="runAlgorithm('bfs')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded">BFS</button>
+
+                        <button onclick="runAlgorithm('dijkstra')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded">Dijkstra</button>
+
+                    </div>
+
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-10 border-t border-slate-800">
+                    <div class="space-y-1">
+                        <p class="text-blue-400 text-[10px] font-bold uppercase tracking-[0.2em]">Interactive</p>
+                        <p class="text-slate-300 text-sm">Sorting Visuals</p>
+                    </div>
+                    <div class="space-y-1">
+                        <p class="text-blue-400 text-[10px] font-bold uppercase tracking-[0.2em]">Precision</p>
+                        <p class="text-slate-300 text-sm">Size & Speed</p>
+                    </div>
+                    <div class="space-y-1">
+                        <p class="text-blue-400 text-[10px] font-bold uppercase tracking-[0.2em]">Theory</p>
+                        <p class="text-slate-300 text-sm">Time Complexities</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-8 lg:p-12 h-[480px] relative flex flex-col justify-between overflow-hidden shadow-2xl">
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <span class="text-[10px] text-slate-400 uppercase tracking-widest">Unsorted</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                            <span class="text-[10px] text-slate-400 uppercase tracking-widest">Comparing</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span class="text-[10px] text-slate-400 uppercase tracking-widest">Sorted</span>
+                        </div>
+                    </div>
+                    <button onclick="resetAndRestart()" class="text-[10px] text-blue-400 hover:text-white border border-blue-500/30 px-3 py-1 rounded transition-all">
+                        RESET ARRAY
+                    </button>
+                </div>
+
+                <div id="visual-bars" class="flex items-end justify-center w-full h-64 gap-1 md:gap-2">
+                    </div>
+
+                <div class="mt-4 text-center">
+                    <span id="algoTitle" class="text-xs text-slate-500 italic"> Live Simulation: Bubble Sort Algorithm </span>
+                                                          
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section id="guide" class="container mx-auto px-6 lg:px-20 py-20">
+
+<h2 class="text-4xl font-bold text-center mb-12">
+How To Use <span class="text-blue-500">Sortify</span>
+</h2>
+
+<div class="grid md:grid-cols-3 gap-8 text-center">
+
+<div class="glass-card p-6 rounded-xl">
+<h3 class="font-semibold text-lg mb-2">1. Generate Array</h3>
+<p class="text-slate-400 text-sm">Click reset to create a random array of values.</p>
+</div>
+
+<div class="glass-card p-6 rounded-xl">
+<h3 class="font-semibold text-lg mb-2">2. Choose Algorithm</h3>
+<p class="text-slate-400 text-sm">Select any algorithm like Bubble Sort or Merge Sort.</p>
+</div>
+
+<div class="glass-card p-6 rounded-xl">
+<h3 class="font-semibold text-lg mb-2">3. Watch Visualization</h3>
+<p class="text-slate-400 text-sm">Observe how the algorithm sorts step-by-step.</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="complexity" class="container mx-auto px-6 lg:px-20 py-20">
+
+<h2 class="text-4xl font-bold text-center mb-12">
+Algorithm <span class="text-blue-500">Complexity</span>
+</h2>
+
+<div class="overflow-x-auto">
+
+<table class="w-full text-sm text-left border border-slate-700">
+
+<thead class="bg-slate-900">
+<tr>
+<th class="p-3">Algorithm</th>
+<th class="p-3">Best</th>
+<th class="p-3">Average</th>
+<th class="p-3">Worst</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr class="border-t border-slate-700">
+<td class="p-3">Bubble Sort</td>
+<td class="p-3">O(n)</td>
+<td class="p-3">O(n²)</td>
+<td class="p-3">O(n²)</td>
+</tr>
+
+<tr class="border-t border-slate-700">
+<td class="p-3">Selection Sort</td>
+<td class="p-3">O(n²)</td>
+<td class="p-3">O(n²)</td>
+<td class="p-3">O(n²)</td>
+</tr>
+
+<tr class="border-t border-slate-700">
+<td class="p-3">Merge Sort</td>
+<td class="p-3">O(n log n)</td>
+<td class="p-3">O(n log n)</td>
+<td class="p-3">O(n log n)</td>
+</tr>
+
+<tr class="border-t border-slate-700">
+<td class="p-3">Quick Sort</td>
+<td class="p-3">O(n log n)</td>
+<td class="p-3">O(n log n)</td>
+<td class="p-3">O(n²)</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+    <section id="algorithms-section" class="hidden container mx-auto px-6 lg:px-20 py-20">
+
+<h2 class="text-4xl font-bold mb-12 text-center">
+Explore <span class="text-blue-500">Algorithms</span>
+</h2>
+
+<div class="grid lg:grid-cols-3 gap-10">
+
+<!-- Sorting Algorithms -->
+<div class="glass-card p-6 rounded-2xl">
+<h3 class="text-xl font-semibold mb-4 text-blue-400">Sorting Algorithms</h3>
+
+<p class="font-semibold mt-3">Bubble Sort</p>
+<pre class="text-sm text-slate-300 overflow-x-auto">
+for i from 0 to n-1
+ for j from 0 to n-i-1
+  if arr[j] > arr[j+1]
+   swap(arr[j], arr[j+1])
+</pre>
+
+<p class="font-semibold mt-3">Selection Sort</p>
+<pre class="text-sm text-slate-300 overflow-x-auto">
+for i from 0 to n-1
+ min = i
+ for j from i+1 to n
+  if arr[j] < arr[min]
+   min = j
+ swap(arr[i], arr[min])
+</pre>
+
+<p class="font-semibold mt-3">Insertion Sort</p>
+<pre class="text-sm text-slate-300 overflow-x-auto">
+for i from 1 to n
+ key = arr[i]
+ j = i-1
+ while j>=0 and arr[j]>key
+  arr[j+1]=arr[j]
+  j--
+ arr[j+1]=key
+</pre>
+
+</div>
+
+<!-- Searching Algorithms -->
+<div class="glass-card p-6 rounded-2xl">
+<h3 class="text-xl font-semibold mb-4 text-blue-400">Searching Algorithms</h3>
+
+<p class="font-semibold mt-3">Binary Search</p>
+<pre class="text-sm text-slate-300 overflow-x-auto">
+while low <= high
+ mid = (low+high)/2
+ if target == arr[mid]
+  return mid
+ else if target > arr[mid]
+  low = mid+1
+ else
+  high = mid-1
+</pre>
+
+</div>
+
+<!-- Graph Algorithms -->
+<div class="glass-card p-6 rounded-2xl">
+<h3 class="text-xl font-semibold mb-4 text-blue-400">Graph Algorithms</h3>
+
+<p class="font-semibold mt-3">DFS</p>
+<pre class="text-sm text-slate-300 overflow-x-auto">
+DFS(node):
+ mark node visited
+ for each neighbor
+  if not visited
+   DFS(neighbor)
+</pre>
+
+<p class="font-semibold mt-3">BFS</p>
+<pre class="text-sm text-slate-300 overflow-x-auto">
+BFS(start):
+ create queue
+ mark start visited
+ push start
+ while queue not empty
+  node = pop
+  visit neighbors
+</pre>
+
+<p class="font-semibold mt-3">Dijkstra</p>
+<pre class="text-sm text-slate-300 overflow-x-auto">
+initialize distance
+while nodes remain
+ pick smallest distance
+ update neighbors
+</pre>
+
+</div>
+
+</div>
+</section>
+
+
+    <footer class="w-full text-center py-6 border-t border-slate-800 mt-16">
+    <p class="text-sm text-slate-400 tracking-wide">
+        Developed by 
+        <span class="text-blue-500 font-semibold">Simran</span>
+    </p>
+</footer>
+
+
+    <script>
+        const container = document.getElementById('visual-bars');
+        const count = 16;
+        let values = [];
+        let isSorting = false;
+
+        function createBars() {
+            container.innerHTML = '';
+            values = Array.from({ length: count }, () => Math.floor(Math.random() * 85) + 10);
+            
+            values.forEach(val => {
+                const bar = document.createElement('div');
+                bar.style.height = `${val}%`;
+                bar.className = 'bar flex-1 bg-blue-500/80 rounded-t-md border-t border-white/10';
+                container.appendChild(bar);
+            });
+        }
+
+        async function bubbleSort() {
+            if (isSorting) return;
+            isSorting = true;
+            const bars = container.children;
+            
+            for (let i = 0; i < count; i++) {
+                for (let j = 0; j < count - i - 1; j++) {
+                    if (!isSorting) return; // Exit if reset
+
+                    bars[j].style.backgroundColor = '#ef4444'; // Red (Comparing)
+                    bars[j + 1].style.backgroundColor = '#ef4444';
+
+                    await new Promise(r => setTimeout(r, 180));
+
+                    if (values[j] > values[j + 1]) {
+                        [values[j], values[j + 1]] = [values[j + 1], values[j]];
+                        bars[j].style.height = `${values[j]}%`;
+                        bars[j + 1].style.height = `${values[j+1]}%`;
+                    }
+
+                    bars[j].style.backgroundColor = 'rgba(59, 130, 246, 0.8)'; // Back to Blue
+                }
+                bars[count - i - 1].style.backgroundColor = '#22c55e'; // Green (Sorted)
+            }
+            isSorting = false;
+        }
+
+     async function selectionSort(){
+
+    const bars = container.children;
+
+    for(let i = 0; i < count; i++){
+
+        let min = i;
+
+        bars[min].style.backgroundColor = "#ef4444"; // current minimum
+
+        for(let j = i+1; j < count; j++){
+
+            bars[j].style.backgroundColor = "#f59e0b"; // comparing
+
+            await new Promise(r => setTimeout(r,150));
+
+            if(values[j] < values[min]){
+
+                bars[min].style.backgroundColor = "rgba(59,130,246,0.8)"; // reset old min
+                min = j;
+
+                bars[min].style.backgroundColor = "#ef4444"; // new min
+            }
+
+            bars[j].style.backgroundColor = "rgba(59,130,246,0.8)";
+        }
+
+        await new Promise(r => setTimeout(r,150));
+
+        [values[i], values[min]] = [values[min], values[i]];
+
+        bars[i].style.height = values[i] + "%";
+        bars[min].style.height = values[min] + "%";
+
+        bars[i].style.backgroundColor = "#22c55e"; // sorted
+    }
+
+}
+
+async function insertionSort(){
+
+    const bars = container.children;
+
+    for(let i = 1; i < count; i++){
+
+        let key = values[i];
+        let j = i - 1;
+
+        while(j >= 0 && values[j] > key){
+
+            bars[j].style.backgroundColor = "red";
+
+            await new Promise(r => setTimeout(r,150));
+
+            values[j+1] = values[j];
+            bars[j+1].style.height = values[j+1] + "%";
+
+            j--;
+        }
+
+        values[j+1] = key;
+        bars[j+1].style.height = key + "%";
+    }
+
+    for(let bar of bars){
+        bar.style.backgroundColor = "green";
+    }
+}
+
+async function mergeSort(start = 0, end = count - 1){
+
+    if(start >= end) return;
+
+    const mid = Math.floor((start + end)/2);
+
+    await mergeSort(start, mid);
+    await mergeSort(mid + 1, end);
+
+    await merge(start, mid, end);
+}
+
+async function merge(start, mid, end){
+
+    const bars = container.children;
+
+    let left = values.slice(start, mid+1);
+    let right = values.slice(mid+1, end+1);
+
+    let i = 0, j = 0, k = start;
+
+    while(i < left.length && j < right.length){
+
+        bars[k].style.backgroundColor = "#ef4444"; // comparing
+
+        await new Promise(r => setTimeout(r,150));
+
+        if(left[i] <= right[j]){
+            values[k] = left[i++];
+        } 
+        else{
+            values[k] = right[j++];
+        }
+
+        bars[k].style.height = values[k] + "%";
+
+        bars[k].style.backgroundColor = "rgba(59,130,246,0.8)"; // reset
+
+        k++;
+    }
+
+    while(i < left.length){
+
+        bars[k].style.backgroundColor = "#f59e0b";
+
+        await new Promise(r => setTimeout(r,150));
+
+        values[k] = left[i++];
+        bars[k].style.height = values[k] + "%";
+
+        bars[k].style.backgroundColor = "rgba(59,130,246,0.8)";
+
+        k++;
+    }
+
+    while(j < right.length){
+
+        bars[k].style.backgroundColor = "#f59e0b";
+
+        await new Promise(r => setTimeout(r,150));
+
+        values[k] = right[j++];
+        bars[k].style.height = values[k] + "%";
+
+        bars[k].style.backgroundColor = "rgba(59,130,246,0.8)";
+
+        k++;
+    }
+
+}
+
+async function quickSort(start=0,end=count-1){
+
+    if(start >= end) return;
+
+    let pivot = await partition(start,end);
+
+    await quickSort(start,pivot-1);
+    await quickSort(pivot+1,end);
+}
+
+async function partition(start,end){
+
+    const bars = container.children;
+
+    let pivot = values[end];
+    let i = start-1;
+
+    for(let j=start;j<end;j++){
+
+        bars[j].style.backgroundColor="red";
+
+        await new Promise(r => setTimeout(r,150));
+
+        if(values[j] < pivot){
+
+            i++;
+
+            [values[i],values[j]]=[values[j],values[i]];
+
+            bars[i].style.height = values[i]+"%";
+            bars[j].style.height = values[j]+"%";
+        }
+
+        bars[j].style.backgroundColor="blue";
+    }
+
+    [values[i+1],values[end]]=[values[end],values[i+1]];
+
+    bars[i+1].style.height = values[i+1]+"%";
+    bars[end].style.height = values[end]+"%";
+
+    return i+1;
+}
+
+async function heapSort(){
+
+    const bars = container.children;
+
+    // Build max heap
+    for(let i = Math.floor(count/2) - 1; i >= 0; i--){
+        await heapify(count, i);
+    }
+
+    // Extract elements
+    for(let i = count - 1; i > 0; i--){
+
+        bars[0].style.backgroundColor = "#ef4444"; // root comparison
+
+        await new Promise(r => setTimeout(r,150));
+
+        [values[0], values[i]] = [values[i], values[0]];
+
+        bars[0].style.height = values[0] + "%";
+        bars[i].style.height = values[i] + "%";
+
+        bars[i].style.backgroundColor = "#22c55e"; // sorted
+
+        await heapify(i, 0);
+    }
+
+    bars[0].style.backgroundColor = "#22c55e";
+}
+
+    async function binarySearch(){
+
+    const bars = container.children;
+
+    values.sort((a,b)=>a-b);
+
+    for(let i=0;i<count;i++){
+        bars[i].style.height = values[i] + "%";
+    }
+
+    let target = values[Math.floor(Math.random()*count)];
+
+    let low = 0;
+    let high = count-1;
+
+    while(low <= high){
+
+        let mid = Math.floor((low+high)/2);
+
+        bars[mid].style.backgroundColor = "red";
+
+        await new Promise(r=>setTimeout(r,500));
+
+        if(values[mid] === target){
+
+            bars[mid].style.backgroundColor = "green";
+            return;
+
+        } else if(values[mid] < target){
+
+            for(let i=low;i<=mid;i++)
+                bars[i].style.backgroundColor="gray";
+
+            low = mid + 1;
+
+        } else {
+
+            for(let i=mid;i<=high;i++)
+                bars[i].style.backgroundColor="gray";
+
+            high = mid - 1;
+
+        }
+
+    }
+
+}
+async function bfs(){
+
+    const bars = container.children;
+
+    let visited = new Array(count).fill(false);
+
+    let queue = [];
+
+    queue.push(0);
+    visited[0] = true;
+
+    while(queue.length){
+
+        let node = queue.shift();
+
+        bars[node].style.backgroundColor="orange";
+
+        await new Promise(r=>setTimeout(r,200));
+
+        if(node+1 < count && !visited[node+1]){
+            queue.push(node+1);
+            visited[node+1] = true;
+        }
+
+        bars[node].style.backgroundColor="green";
+
+    }
+
+}
+async function dfs(){
+
+    const bars = container.children;
+
+    let visited = new Array(count).fill(false);
+
+    async function dfsVisit(node){
+
+        visited[node] = true;
+
+        bars[node].style.backgroundColor = "#f59e0b"; // visiting
+
+        await new Promise(r => setTimeout(r,250));
+
+        if(node + 1 < count && !visited[node + 1]){
+
+            bars[node + 1].style.backgroundColor = "#ef4444"; // next node
+            await new Promise(r => setTimeout(r,200));
+
+            await dfsVisit(node + 1);
+        }
+
+        bars[node].style.backgroundColor = "#22c55e"; // finished
+    }
+
+    await dfsVisit(0);
+
+}
+async function dijkstra(){
+
+    const bars = container.children;
+
+    let dist = new Array(count).fill(Infinity);
+    let visited = new Array(count).fill(false);
+
+    dist[0] = 0;
+
+    for(let i = 0; i < count; i++){
+
+        let minDist = Infinity;
+        let minIndex = -1;
+
+        for(let j = 0; j < count; j++){
+            if(!visited[j] && dist[j] < minDist){
+                minDist = dist[j];
+                minIndex = j;
+            }
+        }
+
+        if(minIndex === -1) break;
+
+        visited[minIndex] = true;
+
+        bars[minIndex].style.backgroundColor = "red";
+
+        await new Promise(r => setTimeout(r,300));
+
+        if(minIndex + 1 < count){
+
+            let newDist = dist[minIndex] + values[minIndex];
+
+            if(newDist < dist[minIndex + 1]){
+                dist[minIndex + 1] = newDist;
+
+                bars[minIndex + 1].style.backgroundColor = "orange";
+                await new Promise(r => setTimeout(r,200));
+            }
+
+        }
+
+        bars[minIndex].style.backgroundColor = "#22c55e";
+
+    }
+
+}
+
+
+      function resetAndRestart() {
+    isSorting = false;
+    createBars();
+}
+
+        // Initialize
+        createBars();
+        bubbleSort();
+
+        function toggleMenu() {
+    const menu = document.getElementById("algoMenu");
+    menu.classList.toggle("hidden");
+}
+
+
+
+    function runAlgorithm(type){
+
+    const title = document.getElementById("algoTitle");
+
+    createBars();
+
+    if(type === "bubble"){
+        title.innerText="Live Simulation: Bubble Sort Algorithm";
+        bubbleSort();
+    }
+
+    else if(type === "selection"){
+        title.innerText="Live Simulation: Selection Sort Algorithm";
+        selectionSort();
+    }
+
+    else if(type === "insertion"){
+        title.innerText="Live Simulation: Insertion Sort Algorithm";
+        insertionSort();
+    }
+
+    else if(type === "merge"){
+        title.innerText="Live Simulation: Merge Sort Algorithm";
+        mergeSort();
+    }
+
+    else if(type === "quick"){
+        title.innerText="Live Simulation: Quick Sort Algorithm";
+        quickSort();
+    }
+
+    else if(type === "heap"){
+        title.innerText="Live Simulation: Heap Sort Algorithm";
+        heapSort();
+    }
+
+    else if(type === "binary"){
+        title.innerText="Live Simulation: Binary Search";
+        binarySearch();
+    }
+
+    else if(type === "dfs"){
+        title.innerText="Live Simulation: Depth First Search";
+        dfs();
+    }
+
+    else if(type === "bfs"){
+        title.innerText="Live Simulation: Breadth First Search";
+        bfs();
+    }
+
+    else if(type === "dijkstra"){
+        title.innerText="Live Simulation: Dijkstra Algorithm";
+        dijkstra();
+    }
+
+}
+function showAlgorithms(){
+
+    const section = document.getElementById("algorithms-section");
+
+    section.classList.remove("hidden");
+
+    section.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+    </script>
+</body>
+</html>
